@@ -1,5 +1,4 @@
 import 'package:checkpoint3/models/rede_social.dart';
-import 'package:charts_flutter_new/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -14,21 +13,34 @@ class DetailsScreen extends StatelessWidget {
         title: Text('Detalhes do Post'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(redeSocial.logo, size: 100,),
-          Text(redeSocial.descricao),
+          Icon(
+            redeSocial.logo,
+            size: 150,
+            color: redeSocial.cor,
+          ),
+          Center(
+            child: Text(
+              redeSocial.descricao,
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            ),
+          ),
           Container(
+            margin: EdgeInsetsDirectional.only(top: 30),
             height: 350,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 3,
+                itemCount: redeSocial.fotos.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    width: 350,
-                    height: 350,
+                    width: 450,
+                    height: 450,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/facebook_1.jpg'),
+                        image: AssetImage(redeSocial.fotos[index]),
+                        fit: BoxFit.contain,
                       ),
                     ),
                   );
@@ -38,29 +50,4 @@ class DetailsScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-List<charts.Series<OrdinalSales, String>> _createSampleData() {
-  final data = [
-    OrdinalSales('Jan', 5),
-    OrdinalSales('Fev', 25),
-    OrdinalSales('Mar', 100),
-    OrdinalSales('Abr', 75),
-  ];
-
-  return [
-    charts.Series<OrdinalSales, String>(
-      id: 'Sales',
-      domainFn: (OrdinalSales sales, _) => sales.month,
-      measureFn: (OrdinalSales sales, _) => sales.sales,
-      data: data,
-    ),
-  ];
-}
-
-class OrdinalSales {
-  final String month;
-  final int sales;
-
-  OrdinalSales(this.month, this.sales);
 }
